@@ -1,6 +1,6 @@
 package com.prorider.controllers.payments;
 
-import com.ecommerce.prorider.services.payments.StripeWebhookService;
+import com.prorider.services.payments.StripeWebhookService;
 import com.stripe.model.Event;
 import com.stripe.net.Webhook;
 import org.springframework.beans.factory.annotation.Value;

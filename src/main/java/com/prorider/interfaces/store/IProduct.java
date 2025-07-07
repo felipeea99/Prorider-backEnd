@@ -19,11 +19,9 @@ public interface IProduct {
     List<ProductResponse> getAllProducts();
     ProductResponse findProductById(int productId);
     Product findProductByIdBaseForm(int productId);
-    List<ProductResponse> getProductsByStoreId(UUID storeId);
     List<ProductResponse> getProductsByCategoryId(int categoryId, UUID storeId);
     List<ProductResponse> getProductsRandomByCategory(int categoryId, UUID storeId);
     ProductDetailsResponse findProductDetailsByProductId(int productId);
-    List<ProductDetailsResponse> findProductDetailsByStoreId(UUID storeId);
-    ByteArrayOutputStream listProductsExcel(UUID storeId);
+    ByteArrayOutputStream listProductsExcel();
     ProductResponse ToProductResponse(Product product);
 }

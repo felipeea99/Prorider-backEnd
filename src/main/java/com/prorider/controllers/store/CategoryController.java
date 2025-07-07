@@ -3,7 +3,7 @@ package com.prorider.controllers.store;
 import com.prorider.DTOs.request.store.CategoryRequest;
 import com.prorider.DTOs.response.store.CategoryResponse;
 import com.prorider.DTOs.update.store.CategoryUpdate;
-import com.ecommerce.prorider.services.store.CategoryService;
+import com.prorider.services.store.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +23,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping
+    @PostMapping("/")
     public CategoryResponse addCategory(@Valid @RequestBody CategoryRequest categoryRequest){
         return this.categoryService.addCategory(categoryRequest);
     }
@@ -33,12 +33,12 @@ public class CategoryController {
         return this.categoryService.findCategoryByID(categoryId);
     }
 
-    @GetMapping
+    @GetMapping("/")
     public List<CategoryResponse> findAllCategories(){
         return this.categoryService.findAllCategories();
     }
 
-    @PutMapping
+    @PutMapping("/")
     public CategoryResponse editCategory(@Valid @RequestBody CategoryUpdate categoryUpdate){
         return this.categoryService.editCategory(categoryUpdate);
     }

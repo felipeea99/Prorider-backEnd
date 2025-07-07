@@ -59,12 +59,10 @@ public class ThemeSettingService implements IThemeSetting {
     }
 
     @Override
-    public Boolean setThemeToShow(int themeId, UUID storeId) {
+    public Boolean setThemeToShow(int themeId) {
         //ThemeId validation
         ThemeSetting theme = themeSettingRepository.findById(themeId)
                 .orElseThrow(() ->new BadRequestException("themeId not found in database"));
-        //Search the field that is active and set it to false
-        this.getThemeSettingActive(storeId);
         //Set the theme Chosen to TRUE
         theme.setActive(true);
         return true;
@@ -78,9 +76,9 @@ public class ThemeSettingService implements IThemeSetting {
 
     ///Edits the Setting that is active in a store, it is marked as inactive (FALSE)
     @Override
-    public ThemeSetting getThemeSettingActive(UUID storeId) {
+    public ThemeSetting getThemeSettingActive() {
         //find the object with the Theme.Active == to "TRUE"
-         ThemeSetting theme =  themeSettingRepository.findThemeActive(storeId);
+         ThemeSetting theme =  themeSettingRepository.findThemeActive();
          //Set the theme.Active to "FALSE" and save it in the database
         theme.setActive(false);
         return themeSettingRepository.save(theme);
@@ -94,7 +92,7 @@ public class ThemeSettingService implements IThemeSetting {
     }
 
     @Override
-    public List<ThemeSetting> findAllThemesByStoreId(UUID storeId) {
-        return themeSettingRepository.findAllThemesByStoreId(storeId);
+    public List<ThemeSetting> findAllThemes() {
+        return themeSettingRepository.findAll();
     }
 }

@@ -10,10 +10,10 @@ public interface IThemeSetting{
     ThemeSetting addTheme(ThemeSetting themeObject);
     ThemeSetting editTheme(ThemeSetting themeObject);
     Boolean deleteTheme(int themeId);
-    Boolean setThemeToShow(int themeId, UUID storeId);
+    Boolean setThemeToShow(int themeId);
     List<ThemeSetting> getAllThemes();
-    ThemeSetting getThemeSettingActive(UUID storeId);
+    ThemeSetting getThemeSettingActive();
     ThemeSetting getThemeById(int themeId);
-    List<ThemeSetting> findAllThemesByStoreId(UUID storeId);
+    List<ThemeSetting> findAllThemes();
 
 }

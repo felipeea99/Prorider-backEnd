@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.UUID;
 @Repository
 public interface ThemeSettingRepository extends JpaRepository<ThemeSetting, Integer> {
-    @Query("SELECT ts FROM ThemeSetting ts WHERE ts.store = :store AND ts.isActive = true")
-    ThemeSetting findThemeActive(@Param("store") UUID store);
-    @Query("SELECT ts FROM ThemeSetting ts WHERE ts.store = :store")
-    List<ThemeSetting> findAllThemesByStoreId(@Param("store") UUID store);
+    @Query("SELECT th FROM ThemeSetting th WHERE th.isActive = true")
+    ThemeSetting findThemeActive();
 }

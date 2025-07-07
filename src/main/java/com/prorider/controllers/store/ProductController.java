@@ -1,13 +1,12 @@
 package com.prorider.controllers.store;
 
-import com.ecommerce.prorider.AOP_Functions.annotations.ValidateStoreAccess;
-import com.ecommerce.prorider.AOP_Functions.context.StoreContextHolder;
 import com.prorider.DTOs.request.store.PriceBySizeRequest;
+import com.prorider.DTOs.request.store.ProdSizeRequest;
 import com.prorider.DTOs.request.store.ProductRequest;
 import com.prorider.DTOs.response.store.ProductDetailsResponse;
 import com.prorider.DTOs.response.store.ProductResponse;
 import com.prorider.DTOs.update.store.ProductUpdate;
-import com.ecommerce.prorider.services.store.ProductService;
+import com.prorider.services.store.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -28,22 +27,19 @@ public class ProductController {
     }
 
     /// Adds a Product Object
-    @ValidateStoreAccess
-    @PostMapping("/{storeName}/")
-    public ProductResponse addProduct(@RequestBody ProductRequest productRequest, @RequestBody List<PriceBySizeRequest>priceBySizeList){
-        //Sets the StoreId base on the StoreName from the Url
-        productRequest.setStoreId(StoreContextHolder.getStoreId());
-       return productService.addProduct(productRequest,priceBySizeList);
+    @PostMapping("/")
+    public ProductResponse addProduct(@RequestBody ProdSizeRequest prodSizeRequest){
+       return productService.addProduct(prodSizeRequest);
     }
 
     /// Edits a Product Object
-    @PutMapping("/{storeName}/")
+    @PutMapping("/")
     public ProductResponse editProduct(@RequestBody ProductUpdate productUpdate){
         return productService.editProduct(productUpdate);
     }
 
     /// Deletes a Product Object
-    @PostMapping("/{storeName}/{productId}")
+    @PostMapping("/{productId}")
     public Boolean deleteProduct(@PathVariable int productId){
         return productService.deleteProduct(productId);
     }
@@ -55,38 +51,19 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @GetMapping("/{storeName}/{productId}")
+    @GetMapping("/{productId}")
     public ProductResponse findProductById(@PathVariable int productId){
         return productService.findProductById(productId);
     }
 
-    /// This is the EndPoint that calls all the product referring to a certain store
-    @ValidateStoreAccess
-    @GetMapping("/{storeName}/")
-    public List<ProductResponse> getProductsByStoreId(){
-        UUID storeId = StoreContextHolder.getStoreId();
-        return productService.getProductsByStoreId(storeId);
-    }
-
     /// This is the EndPoint that calls the main view for each object
-    @GetMapping("/{storeName}/findProductDetailsByProductId/{productId}")
+    @GetMapping("/{productId}/details")
     public ProductDetailsResponse findProductDetailsByProductId(int productId){
-        UUID storeId = StoreContextHolder.getStoreId();
         return productService.findProductDetailsByProductId(productId);
     }
 
-    /// This is the EndPoint that calls all the product referring to a certain store
-    @ValidateStoreAccess
-    @GetMapping("/{storeName}/findProductDetailsByStoreId")
-    public List<ProductDetailsResponse> findProductDetailsByStoreId(){
-        UUID storeId = StoreContextHolder.getStoreId();
-        return productService.findProductDetailsByStoreId(storeId);
-    }
-
-    @ValidateStoreAccess
-    @GetMapping("/{storeName}/productListExcel")
+    @GetMapping("/excel")
     public ByteArrayOutputStream listProductsExcel(){
-        UUID storeId = StoreContextHolder.getStoreId();
-        return productService.listProductsExcel(storeId);
+        return productService.listProductsExcel();
     }
 }

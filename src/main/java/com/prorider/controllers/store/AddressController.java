@@ -1,6 +1,5 @@
 package com.prorider.controllers.store;
 
-import com.prorider.AOP_Functions.context.StoreContextHolder;
 import com.prorider.DTOs.request.store.AddressRequest;
 import com.prorider.DTOs.response.store.AddressResponse;
 import com.prorider.DTOs.update.store.AddressUpdate;
@@ -27,35 +26,25 @@ public class AddressController {
     public AddressResponse findAddressById(@PathVariable int addressId){
        return this.addressService.findAddressById(addressId);
     }
-    /// This EndPoint search for a List of Address objects, using the ValidateStoreAccess to retrieve the customerId
+    /// This EndPoint search for a List of Address objects
     @GetMapping("/{userId}")
     public List<AddressResponse> findAddressesByUserId(@PathVariable UUID userId){
-        /// Gets the StoreContextHolder.customerId();
-        UUID customerId = StoreContextHolder.getCustomerId();
-
         return this.addressService.findAddressesByUserId(userId);
     }
 
-    /// This EndPoint adds a AddressObj to the database, it passes the customerId to the AddressRequest due to be available to extract the customerId from the
-    /// ValidateStoreAccess Aspect
-    @PostMapping("/{storeName}/{userId}")
+    /// This EndPoint adds a AddressObj to the database
+    @PostMapping("/")
     public AddressResponse addAddress(@Valid @RequestBody AddressRequest addressRequest){
-        /// Gets the StoreContextHolder.customerId();
-        UUID customerId = StoreContextHolder.getCustomerId();
-        /// pass the customerId to the addressRequest object
-        addressRequest.setCustomerId(customerId);
         return this.addressService.addAddress(addressRequest);
     }
 
-    /// This EndPoint is used to edit a AddressObj, it receives the storeName and the AddressUpdate object, it does not require customerId
-    /// due to is already on the address object
-    @PutMapping("/{storeName}/{userId}")
+    /// This EndPoint is used to edit a AddressObj
+    @PutMapping("/{userId}")
     public AddressResponse editAddress(@Valid @RequestBody AddressUpdate addressUpdate){
         return this.addressService.editAddress(addressUpdate);
     }
-    /// This EndPoint is used to delete a AddressObj, it receives the storeName and addressId, it does not require customerId
-    /// due to is already on the address object
-    @DeleteMapping("/{storeName}/{userId}/{addressId}")
+    /// This EndPoint is used to delete a AddressObj
+    @DeleteMapping("/{addressId}")
     public Boolean deleteAddress(@PathVariable int addressId ){
         return this.addressService.deleteAddress(addressId);
     }

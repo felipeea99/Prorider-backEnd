@@ -3,7 +3,7 @@ package com.prorider.controllers.store;
 import com.prorider.DTOs.request.store.SizeRequest;
 import com.prorider.DTOs.response.store.SizeResponse;
 import com.prorider.DTOs.update.store.SizeUpdate;
-import com.ecommerce.prorider.services.store.SizeService;
+import com.prorider.services.store.SizeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,18 +13,18 @@ import java.util.List;
 @RequestMapping("/api/size")
 public class SizeController {
 
-    private final SizeService sizeService;
+    private final com.prorider.services.store.SizeService sizeService;
 
     public SizeController(SizeService sizeService) {
         this.sizeService = sizeService;
     }
 
-    @PostMapping
+    @PostMapping("/")
     public SizeResponse addSize(@RequestBody SizeRequest sizeRequest){
         return this.sizeService.addSize(sizeRequest);
     }
 
-    @PutMapping
+    @PutMapping("/")
     public SizeResponse editSize(@RequestBody SizeUpdate sizeUpdate){
         return this.sizeService.editSize(sizeUpdate);
     }
@@ -34,7 +34,7 @@ public class SizeController {
         return this.sizeService.deleteSize(deleteId);
     }
 
-    @GetMapping
+    @GetMapping("/allSizes")
     public List<SizeResponse> findAllSizes(){
         return this.sizeService.findAllSizes();
     }

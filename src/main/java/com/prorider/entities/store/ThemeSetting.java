@@ -50,9 +50,5 @@ public class ThemeSetting {
 
         @Size(min = 7)
         private String freeDeliveryText;
-
         private boolean isActive;
-        @ManyToOne
-        @JoinColumn(name = "storeId")
-        private Store store;
 }

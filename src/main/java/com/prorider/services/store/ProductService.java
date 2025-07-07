@@ -1,6 +1,7 @@
 package com.prorider.services.store;
 
 import com.prorider.DTOs.request.store.PriceBySizeRequest;
+import com.prorider.DTOs.request.store.ProdSizeRequest;
 import com.prorider.DTOs.request.store.ProductRequest;
 import com.prorider.DTOs.response.store.*;
 import com.prorider.DTOs.update.store.ProductUpdate;
@@ -42,7 +43,7 @@ public class ProductService implements IProduct {
 
     ///Add Product Object
     @Override
-    public ProductResponse addProduct(ProductRequest productRequest, List<PriceBySizeRequest>priceBySizeList) {
+    public ProductResponse addProduct(ProdSizeRequest prodSizeRequest) {
         /// Get the "category" object
         Category category = categoryService.findCategoryByIdBaseForm(productRequest.getCategoryId());
         ///Create the Product obj
@@ -143,15 +144,6 @@ public class ProductService implements IProduct {
     @Override
     public Product findProductByIdBaseForm(int productId) {
         return productRepository.findById(productId).orElseThrow(()-> new BadRequestException("productId was not found on the database"));
-    }
-
-    /// Retrieve All the products base on the storeId
-    @Override
-    public List<ProductResponse> getProductsByStoreId(UUID storeId) {
-        return productRepository.findAllProductsByStoreId(storeId)
-                .stream()
-                .map(this::ToProductResponse)
-                .toList();
     }
 
     /// Retrieve all products objects base on the categoryId and the storeId

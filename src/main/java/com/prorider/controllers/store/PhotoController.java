@@ -1,10 +1,9 @@
 package com.prorider.controllers.store;
 
-import com.ecommerce.prorider.AOP_Functions.annotations.ValidateStoreAccess;
 import com.prorider.DTOs.request.store.PhotoRequest;
 import com.prorider.DTOs.response.store.PhotoResponse;
 import com.prorider.DTOs.update.store.PhotoUpdate;
-import com.ecommerce.prorider.services.store.PhotoService;
+import com.prorider.services.store.PhotoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,37 +20,32 @@ public PhotoController(PhotoService photoService) {
 }
 
 /// Add a single photo
-@ValidateStoreAccess
-@PostMapping("{storeName}")
+@PostMapping("/")
 public PhotoResponse addPhoto(@RequestBody PhotoRequest photoRequest) {
     return photoService.addPhoto(photoRequest);
 }
 
 /// Edit a photo
-@ValidateStoreAccess
-@PutMapping("{storeName}")
+@PutMapping("/")
 public PhotoResponse editPhoto(@RequestBody PhotoUpdate photoUpdate) {
     return photoService.editPhoto(photoUpdate);
 }
 
-/// Delete a photo by ID
-@ValidateStoreAccess
-@DeleteMapping("{storeName}/{photoID}")
+/// Delete a photo by photoID
+@DeleteMapping("/{photoID}")
 public ResponseEntity<Boolean> deletePhoto(@PathVariable int photoID) {
     boolean deleted = photoService.deletePhoto(photoID);
     return ResponseEntity.ok(deleted);
 }
 
 /// Get all photos by product ID
-@ValidateStoreAccess
-@GetMapping("{storeName}/product/{productID}")
+@GetMapping("/{productID}")
 public List<PhotoResponse> getAllPhotosByProductID(@PathVariable int productID) {
     return photoService.getAllPhotosByProductID(productID);
 }
 
 /// Get all photos with index 0 by product ID
-@ValidateStoreAccess
-@GetMapping("/{storeName}/index-zero/{productID}")
+@GetMapping("/index-zero/{productID}")
 public List<PhotoResponse> getPhotosIndexZero(@PathVariable int productID) {
    return photoService.getPhotosIndexZero(productID);
 }
