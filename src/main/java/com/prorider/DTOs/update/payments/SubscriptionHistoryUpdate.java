@@ -1,0 +1,17 @@
+package com.prorider.DTOs.update.payments;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class SubscriptionHistoryUpdate {
+    private int subscriptionHistoryId;
+    @NotNull
+    private SubscriptionDb subscription;
+}
