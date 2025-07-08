@@ -122,14 +122,6 @@ public class PhotoService implements IPhoto {
         // Convert each photo from photoList into PhotoResponse type
         return photoList.stream().map(this::ToPhotoResponseObj).toList();
     }
-    /// This function is used to Collect all the photos from a store using storeId, it is used to avoid calling multiple times the database
-    /// So, it calls one time and after that should make the matches correspondingly
-    @Override
-    public List<PhotoResponse> findAllPhotosByStoreId(UUID storeId) {
-        List<Photo> photoList = photoRepository.findAllPhotosByStoreId(storeId);
-        return photoList.stream().map(this::ToPhotoResponseObj).toList();
-    }
-
     @Override
     public PhotoResponse ToPhotoResponseObj(Photo photo) {
         PhotoResponse photoObj = new PhotoResponse();
@@ -141,7 +133,7 @@ public class PhotoService implements IPhoto {
 
     @Override
     public Photo ToPhotoObj(PhotoRequest photoRequest) {
-        /// Product Inicialization
+        /// Product Initialization
         Product product = productService.findProductByIdBaseForm(photoRequest.getProductId());
         /// Photo transformation
         Photo photo = new Photo();

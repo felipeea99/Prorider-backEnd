@@ -9,7 +9,6 @@ import com.prorider.exceptions.BadRequestException;
 import com.prorider.exceptions.UnauthorizedException;
 import com.prorider.interfaces.auth.IUserAcc;
 import com.prorider.repository.auth.UserRepository;
-import com.prorider.services.store.JWTService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

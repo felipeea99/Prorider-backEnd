@@ -29,5 +29,5 @@ public class CartUpdate {
     /// Might be Null
     private SizeResponse sizeObj;
     @NotNull
-    private UUID addressId;
+    private UUID userId;
 }

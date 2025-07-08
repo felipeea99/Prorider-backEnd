@@ -1,8 +1,6 @@
 package com.prorider.controllers.store;
 
-import com.prorider.DTOs.request.store.PriceBySizeRequest;
-import com.prorider.DTOs.request.store.ProdSizeRequest;
-import com.prorider.DTOs.request.store.ProductRequest;
+import com.prorider.DTOs.request.store.ProductDetailsRequest;
 import com.prorider.DTOs.response.store.ProductDetailsResponse;
 import com.prorider.DTOs.response.store.ProductResponse;
 import com.prorider.DTOs.update.store.ProductUpdate;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/product")
@@ -28,7 +25,7 @@ public class ProductController {
 
     /// Adds a Product Object
     @PostMapping("/")
-    public ProductResponse addProduct(@RequestBody ProdSizeRequest prodSizeRequest){
+    public ProductDetailsResponse addProduct(@RequestBody ProductDetailsRequest prodSizeRequest){
        return productService.addProduct(prodSizeRequest);
     }
 

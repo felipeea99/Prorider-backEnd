@@ -5,11 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProdSizeRequest {
+public class ProductDetailsRequest {
     private ProductRequest productRequest;
-    private PriceBySizeRequest priceBySizeRequest;
+    private List<PriceBySizeRequest> priceBySizeRequest;
+    private List<PhotoRequest> photosRequests;
+
 }

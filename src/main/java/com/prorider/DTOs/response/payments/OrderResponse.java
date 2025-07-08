@@ -25,6 +25,5 @@ public class OrderResponse {
     private String storeName;
     private String paymentStatus;
     private UserResponse user;
-    private StoreLiteResponse store;
     private AddressResponse address;
 }

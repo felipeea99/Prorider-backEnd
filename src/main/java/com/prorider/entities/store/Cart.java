@@ -1,5 +1,6 @@
 package com.prorider.entities.store;
 
+import com.prorider.entities.auth.UserAcc;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -38,6 +39,6 @@ public class Cart {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "customerId")
-    private Customer customer;
+    @JoinColumn(name = "userId")
+    private UserAcc user;
 }

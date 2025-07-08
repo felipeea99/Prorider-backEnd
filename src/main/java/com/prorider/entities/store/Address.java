@@ -1,5 +1,6 @@
 package com.prorider.entities.store;
 
+import com.prorider.entities.auth.UserAcc;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -29,8 +30,8 @@ public class Address {
     @NotBlank(message = "town is mandatory")
     private String town;
     @ManyToOne
-    @JoinColumn(name = "customerId")
-    private Customer customer;
+    @JoinColumn(name = "userId")
+    private UserAcc user;
 
 }
 

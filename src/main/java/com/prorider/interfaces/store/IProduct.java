@@ -1,7 +1,6 @@
 package com.prorider.interfaces.store;
 
-import com.prorider.DTOs.request.store.PriceBySizeRequest;
-import com.prorider.DTOs.request.store.ProductRequest;
+import com.prorider.DTOs.request.store.ProductDetailsRequest;
 import com.prorider.DTOs.response.store.ProductDetailsResponse;
 import com.prorider.DTOs.response.store.ProductResponse;
 import com.prorider.DTOs.update.store.ProductUpdate;
@@ -12,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IProduct {
-    ProductResponse addProduct(ProductRequest productRequest,List<PriceBySizeRequest>priceBySizeList);
+    ProductDetailsResponse addProduct(ProductDetailsRequest prodSizeRequest);
     ProductResponse editProduct(ProductUpdate productUpdate);
     Boolean deleteProduct(int productId);
     ProductResponse decreaseProductByOne (Product product);

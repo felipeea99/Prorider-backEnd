@@ -1,4 +1,4 @@
-package com.prorider.services.store;
+package com.prorider.services.auth;
 
 import com.prorider.entities.auth.UserAcc;
 import com.prorider.interfaces.auth.IUserAcc;

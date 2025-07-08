@@ -1,7 +1,5 @@
 package com.prorider.interfaces.payments;
 
-import com.prorider.DTOs.request.payments.SubscriptionRequest;
-
 import java.util.UUID;
 
 public interface ISubscription {

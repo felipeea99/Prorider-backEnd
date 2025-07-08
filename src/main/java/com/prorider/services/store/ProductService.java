@@ -1,7 +1,6 @@
 package com.prorider.services.store;
 
-import com.prorider.DTOs.request.store.PriceBySizeRequest;
-import com.prorider.DTOs.request.store.ProdSizeRequest;
+import com.prorider.DTOs.request.store.ProductDetailsRequest;
 import com.prorider.DTOs.request.store.ProductRequest;
 import com.prorider.DTOs.response.store.*;
 import com.prorider.DTOs.update.store.ProductUpdate;
@@ -29,24 +28,24 @@ public class ProductService implements IProduct {
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
     private final PriceBySizeService priceBySizeService;
-    private final SizeService sizeService;
     private final PhotoService photoService;
 
     @Autowired
-    public ProductService(ProductRepository productRepository, CategoryService categoryService, PriceBySizeService priceBySizeService, SizeService sizeService, PhotoService photoService) {
+    public ProductService(ProductRepository productRepository, CategoryService categoryService, PriceBySizeService priceBySizeService, PhotoService photoService) {
         this.productRepository = productRepository;
         this.categoryService = categoryService;
         this.priceBySizeService = priceBySizeService;
-        this.sizeService = sizeService;
         this.photoService = photoService;
     }
 
     ///Add Product Object
     @Override
-    public ProductResponse addProduct(ProdSizeRequest prodSizeRequest) {
+    public ProductDetailsResponse addProduct(ProductDetailsRequest prodSizeRequest) {
+        /// To get the productRequest object more clear
+        ProductRequest productRequest = prodSizeRequest.getProductRequest();
         /// Get the "category" object
         Category category = categoryService.findCategoryByIdBaseForm(productRequest.getCategoryId());
-        ///Create the Product obj
+        /// Create the Product object
         Product product = new Product();
         product.setActive(productRequest.isActive());
         product.setCategory(category);
@@ -63,10 +62,16 @@ public class ProductService implements IProduct {
         }
         /// Save the product on the database and store it on "productSaved"
         Product productSaved = productRepository.save(product);
+        /// Photos, save all the photos once the product products has been saved
+        List<PhotoResponse> photoResponse = photoService.addMultiplePhotos(prodSizeRequest.getPhotosRequests());
         /// Price By Size List, this method receives a list of priceBySizeRequest and save it into the database
-        priceBySizeService.addProductSize(priceBySizeList,productSaved);
-        ///Transform "productSaved" into the ProduceResponseType
-        return this.ToProductResponse(productSaved);
+        List<PriceBySizeResponse> priceBySizeResponse =  priceBySizeService.addProductSize(prodSizeRequest.getPriceBySizeRequest(),productSaved);
+        ///ProductDetailsResponse initialization and transformations
+        ProductDetailsResponse productDetailsResponse = new ProductDetailsResponse();
+        productDetailsResponse.setProductResponse(this.ToProductResponse(productSaved));
+        productDetailsResponse.setPhotoList(photoResponse);
+        productDetailsResponse.setPriceBySizeResponseList(priceBySizeResponse);
+        return productDetailsResponse ;
     }
 
     ///Edit ProductSingle Objects
@@ -149,7 +154,7 @@ public class ProductService implements IProduct {
     /// Retrieve all products objects base on the categoryId and the storeId
     @Override
     public List<ProductResponse> getProductsByCategoryId(int categoryId, UUID storeId) {
-        return productRepository.findAllProductsByStoreId(storeId)
+        return productRepository.findAll()
                         .stream()
                         .filter(product -> product.getCategory().getCategoryId() == categoryId)
                         .map(this::ToProductResponse)
@@ -159,7 +164,7 @@ public class ProductService implements IProduct {
     /// Retrieve the product objects base on the categoryId and the storeId and Mix them to have random order
     @Override
     public List<ProductResponse> getProductsRandomByCategory(int categoryId, UUID storeId) {
-    List<ProductResponse>productResponse = productRepository.findAllProductsByStoreId(storeId)
+    List<ProductResponse>productResponse = productRepository.findAll()
                     .stream()
                     .filter(product -> product.getCategory().getCategoryId() == categoryId)
                     .map(this::ToProductResponse)
@@ -185,41 +190,9 @@ public class ProductService implements IProduct {
         productDetailsResponse.setPhotoList(photoResponseList);
         return productDetailsResponse;
     }
-    /// This method retrieves all the products objects as a list and a list of photos, priceBySize by using a "productId", useful to show useful for show the data store owner
-    @Override
-    public List<ProductDetailsResponse> findProductDetailsByStoreId(UUID storeId) {
-        /// Retrieve all the products that matches with the storeId and transform it into "ProductResponse" type
-        List<Product> productList =  productRepository.findAllProductsByStoreId(storeId);
-        List<ProductResponse> productResponseList =  productList.stream().map(this::ToProductResponse).toList();
-        /// Collect all the photos and ProductBySize Objects
-        List<PhotoResponse> photoResponseList = photoService.findAllPhotosByStoreId(storeId);
-        List<PriceBySizeResponse> priceBySizeResponseList = priceBySizeService.findAllPriceBySizeByStoreId(storeId);
-        /// Group the photos and priceBySize
-        Map<Integer, List<PhotoResponse>> photoByProductId = photoResponseList.stream().collect(Collectors.groupingBy(PhotoResponse::getProductId));
-        Map<Integer, List<PriceBySizeResponse>> priceBySizeProductId = priceBySizeResponseList.stream().collect(Collectors.groupingBy(prop -> prop.getProduct().getProductId()));
-        /// ProductDetails Initialization
-        List<ProductDetailsResponse> productDetailsList = new ArrayList<>();
-        /// Match with the product.productId each list
-        for (ProductResponse product : productResponseList){
-            int productId = product.getProductId();
-            /// Filter the Original List
-            List<PhotoResponse> photoList = photoByProductId.getOrDefault(productId, new ArrayList<>());
-            List<PriceBySizeResponse> priceBySizeList = priceBySizeProductId.getOrDefault(productId, new ArrayList<>());
-            /// Add the details to the "productDetailsList"
-            ProductDetailsResponse productDetailsResponse = new ProductDetailsResponse();
-            productDetailsResponse.setProductResponse(product);
-            productDetailsResponse.setPhotoList(photoList);
-            productDetailsResponse.setPriceBySizeResponseList(priceBySizeList);
-
-            productDetailsList.add(productDetailsResponse);
-        }
-
-        return productDetailsList;
-    }
-
 
     @Override
-    public ByteArrayOutputStream listProductsExcel(UUID storeId) {
+    public ByteArrayOutputStream listProductsExcel() {
             try (Workbook workbook = new HSSFWorkbook()) {
                 /// Products with Single Price
                 Sheet productSheet = workbook.createSheet("Productos");
@@ -232,7 +205,7 @@ public class ProductService implements IProduct {
                 header.createCell(3).setCellValue("Categoría");
 
                 // Get the products that its price is no 0
-                List<Product> productList = productRepository.findAllProductsByStoreId(storeId)
+                List<Product> productList = productRepository.findAll()
                         .stream().filter(product -> product.getPrice() != null)
                                 .toList();
 
@@ -258,20 +231,20 @@ public class ProductService implements IProduct {
                 //retrieves all the priceBySize objects
                 List<PriceBySize> priceBySizeList = priceBySizeService.findAllProductSizesBaseForm();
 
-                Sheet productSize = workbook.createSheet("Productos y Tallas");
+                Sheet productSizeSheet = workbook.createSheet("Productos y Tallas");
 
                 // Headers
-                Row header2 = productSheet.createRow(0);
-                header.createCell(0).setCellValue("Nombre del Producto");
-                header.createCell(1).setCellValue("Activo/Inactivo");
-                header.createCell(2).setCellValue("Categoría");
-                header.createCell(3).setCellValue("Talla y Precio");
+                Row header2 = productSizeSheet.createRow(0);
+                header2.createCell(0).setCellValue("Nombre del Producto");
+                header2.createCell(1).setCellValue("Activo/Inactivo");
+                header2.createCell(2).setCellValue("Categoría");
+                header2.createCell(3).setCellValue("Talla y Precio");
 
 
                 /// Data PriceBySize
                 int rowCountPs = 1;
                 for (PriceBySize ps : priceBySizeList) {
-                    Row dataRow = productSheet.createRow(rowCountPs++);
+                    Row dataRow = productSizeSheet.createRow(rowCountPs++);
                     dataRow.createCell(0).setCellValue(ps.getProduct().getProductName());
                     dataRow.createCell(1).setCellValue(ps.getProduct().isActive() ? "Activo" : "Inactivo");
                     dataRow.createCell(2).setCellValue(ps.getProduct().getCategory().getCategoryName());

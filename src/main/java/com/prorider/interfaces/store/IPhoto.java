@@ -17,7 +17,6 @@ public interface IPhoto {
     List<PhotoResponse> getAllPhotosByProductID(int productID);
     void photoOrder(int productID);
     List<PhotoResponse> getPhotosIndexZero(int productId);
-    List<PhotoResponse> findAllPhotosByStoreId(UUID storeId);
     PhotoResponse ToPhotoResponseObj(Photo photo);
     Photo ToPhotoObj(PhotoRequest photoRequest);
 
