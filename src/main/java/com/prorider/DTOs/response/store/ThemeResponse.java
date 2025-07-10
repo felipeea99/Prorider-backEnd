@@ -21,6 +21,5 @@ public class ThemeResponse {
     private String backgroundTextColor;
     private String cardBackground;
     private String cardText;
-    private String freeDeliveryText;
     private boolean isActive;
 }

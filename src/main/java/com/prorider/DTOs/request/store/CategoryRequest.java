@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryRequest {
-    @NotBlank(message = "category name should not be empty")
+    @NotBlank(message = "El nombre de categoria no debe estar vacio")
     private String categoryName;
 
     public Category ToCategoryObj(){

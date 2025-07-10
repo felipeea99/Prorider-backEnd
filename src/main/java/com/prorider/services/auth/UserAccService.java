@@ -3,6 +3,7 @@ package com.prorider.services.auth;
 import com.prorider.DTOs.request.auth.UserAccRequest;
 import com.prorider.DTOs.response.auth.LoginDTO;
 import com.prorider.DTOs.response.auth.UserResponse;
+import com.prorider.DTOs.update.auth.UserAccUpdate;
 import com.prorider.entities.auth.UserAcc;
 import com.prorider.entities.auth.UserAccPrincipal;
 import com.prorider.exceptions.BadRequestException;
@@ -155,5 +156,15 @@ public class UserAccService implements IUserAcc {
     @Override
     public UserAcc findByUserId(UUID userId) {
        return userAccRepository.findByUserId(userId);
+    }
+
+    @Override
+    public UserAcc EditProfile(UserAccUpdate userAccUpdate) {
+       UserAcc user = this.findByUserId(userAccUpdate.getUserId());
+        user.setName(userAccUpdate.getName());
+        user.setUserLastName1(userAccUpdate.getUserLastName1());
+        user.setUserLastName2(userAccUpdate.getUserLastName2());
+        user.setPhoneNumber(userAccUpdate.getPhoneNumber());
+       return user;
     }
 }

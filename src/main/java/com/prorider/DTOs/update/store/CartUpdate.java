@@ -15,19 +15,19 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartUpdate {
-    @Min(1)
+
+    @Min(value = 1, message = "El 'cartId' debe ser mayor o igual a 1")
     private int cartId;
-    @Min(1)
-    private int quantity;
-    @NotNull
+    @NotNull(message = "La cantidad está vacía")
+    @Min(value = 1, message = "La cantidad mínima debe ser 1")
+    private Integer quantity;
     private boolean isCompleted;
-    @NotNull
-    private int productId;
-    @NotNull
-    /// Might be true or false
-    private boolean isSize;
-    /// Might be Null
+    @NotNull(message = "El campo 'productId' no debe estar vacío")
+    private Integer productId;
+    @NotNull(message = "El campo '¿Tiene talla?' no debe estar vacío")
+    private Boolean isSize;
+    /// Puede ser null si isSize == false
     private SizeResponse sizeObj;
-    @NotNull
+    @NotNull(message = "El campo 'userId' no debe estar vacío")
     private UUID userId;
 }

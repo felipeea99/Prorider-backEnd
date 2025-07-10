@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SizeRequest {
-    @NotNull(message = "size is mandatory")
+    @NotNull(message = "El campo 'Talla' esta vacía")
     private String size;
 
     public Size ToSizeObject() {

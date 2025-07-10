@@ -15,16 +15,17 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartRequest {
-    @Min(1)
-    private int quantity;
+    @NotNull(message = "La cantidad esta vacia")
+    @Min(value = 1, message = "La cantidad minima debe ser 1")
+    private Integer quantity;
     private boolean isCompleted;
-    @NotNull
+    @NotNull(message = "El productId no debe estar vacio")
     private int productId;
-    @NotNull
     /// Might be true or false
-    private boolean isSize;
+    @NotNull(message = "El campo 'isSize' no debe estar vacio")
+    private Boolean isSize;
     /// Might be Null
     private SizeResponse sizeObj;
-    @NotNull
+    @NotNull(message = "El 'userId' no debe estar vacio")
     private UUID userId;
 }

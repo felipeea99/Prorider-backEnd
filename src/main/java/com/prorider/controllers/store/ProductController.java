@@ -5,6 +5,7 @@ import com.prorider.DTOs.response.store.ProductDetailsResponse;
 import com.prorider.DTOs.response.store.ProductResponse;
 import com.prorider.DTOs.update.store.ProductUpdate;
 import com.prorider.services.store.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -25,13 +26,13 @@ public class ProductController {
 
     /// Adds a Product Object
     @PostMapping("/")
-    public ProductDetailsResponse addProduct(@RequestBody ProductDetailsRequest prodSizeRequest){
+    public ProductDetailsResponse addProduct(@Valid  @RequestBody ProductDetailsRequest prodSizeRequest){
        return productService.addProduct(prodSizeRequest);
     }
 
     /// Edits a Product Object
     @PutMapping("/")
-    public ProductResponse editProduct(@RequestBody ProductUpdate productUpdate){
+    public ProductResponse editProduct(@Valid @RequestBody ProductUpdate productUpdate){
         return productService.editProduct(productUpdate);
     }
 

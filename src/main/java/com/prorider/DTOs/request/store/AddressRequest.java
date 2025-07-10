@@ -14,17 +14,17 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddressRequest {
-    @NotBlank(message = "country is mandatory")
+    @NotBlank(message = "El campo 'Pais' esta vacio")
     @Size(min = 4)
     private String country;
-    @NotBlank(message = "street is mandatory")
+    @NotBlank(message = "El campo 'calle' esta vacio")
     private String street;
-    @NotBlank(message = "number is mandatory")
+    @NotBlank(message = "El campo 'numero' esta vacio")
     private String number;
-    @NotBlank(message = "colony is mandatory")
+    @NotBlank(message = "El campo 'colonia' esta vacio")
     private String colony;
-    @NotBlank(message = "town is mandatory")
+    @NotBlank(message = "El campo 'ciudad' esta vacio")
     private String town;
-    @NotBlank(message = "userId is mandatory")
+    @NotBlank(message = "El campo 'userId' esta vacio")
     private UUID userId;
 }

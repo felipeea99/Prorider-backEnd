@@ -13,9 +13,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginDTO {
-    @Email(message = "Email should be valid")
-    @NotBlank(message = "Email is required")
+    @Email(message = "Correo invalido")
+    @NotBlank(message = "El correo no puede estar vacío")
     private String userName;
-    @NotBlank(message = "Password is required")
+    @NotBlank(message = "La contraseña no puede estar vacia")
     private String password;
 }

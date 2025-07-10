@@ -4,6 +4,7 @@ import com.prorider.DTOs.request.store.PhotoRequest;
 import com.prorider.DTOs.response.store.PhotoResponse;
 import com.prorider.DTOs.update.store.PhotoUpdate;
 import com.prorider.services.store.PhotoService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +22,13 @@ public PhotoController(PhotoService photoService) {
 
 /// Add a single photo
 @PostMapping("/")
-public PhotoResponse addPhoto(@RequestBody PhotoRequest photoRequest) {
+public PhotoResponse addPhoto(@Valid @RequestBody PhotoRequest photoRequest) {
     return photoService.addPhoto(photoRequest);
 }
 
 /// Edit a photo
 @PutMapping("/")
-public PhotoResponse editPhoto(@RequestBody PhotoUpdate photoUpdate) {
+public PhotoResponse editPhoto(@Valid  @RequestBody PhotoUpdate photoUpdate) {
     return photoService.editPhoto(photoUpdate);
 }
 

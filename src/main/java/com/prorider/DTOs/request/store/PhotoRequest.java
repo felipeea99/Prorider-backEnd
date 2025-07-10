@@ -15,6 +15,6 @@ public class PhotoRequest {
     @NotBlank(message = "photoValue is mandatory")
     private String photoValue;
     @NotNull(message = "productId is mandatory")
-    private int productId;
+    private Integer productId;
     
 }

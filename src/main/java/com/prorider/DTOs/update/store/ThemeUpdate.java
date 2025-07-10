@@ -1,34 +1,55 @@
 package com.prorider.DTOs.update.store;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class ThemeUpdate {
 
     private Integer themeId;
-    @Size(min = 7)
+
+    @NotBlank(message = "El color primario no debe estar vacío")
+    @Size(min = 7, message = "El color primario debe tener al menos 7 caracteres")
     private String primaryColor;
-    @Size(min = 7)
+
+    @NotBlank(message = "El color secundario no debe estar vacío")
+    @Size(min = 7, message = "El color secundario debe tener al menos 7 caracteres")
     private String secondaryColor;
-    @Size(min = 7)
+
+    @NotBlank(message = "El color de texto primario no debe estar vacío")
+    @Size(min = 7, message = "El color de texto primario debe tener al menos 7 caracteres")
     private String primaryTextColor;
-    @Size(min = 7)
+
+    @NotBlank(message = "El color de texto secundario no debe estar vacío")
+    @Size(min = 7, message = "El color de texto secundario debe tener al menos 7 caracteres")
     private String secondaryTextColor;
-    @Size(min = 7)
+
+    @NotBlank(message = "El color de fondo no debe estar vacío")
+    @Size(min = 7, message = "El color de fondo debe tener al menos 7 caracteres")
     private String backgroundColor;
-    @Size(min = 7)
+
+    @NotBlank(message = "El color hover primario no debe estar vacío")
+    @Size(min = 7, message = "El color hover primario debe tener al menos 7 caracteres")
     private String primaryHoverColor;
-    @Size(min = 7)
+
+    @NotBlank(message = "El color hover secundario no debe estar vacío")
+    @Size(min = 7, message = "El color hover secundario debe tener al menos 7 caracteres")
     private String secondaryHoverColor;
-    @Size(min = 7)
+
+    @NotBlank(message = "El color del texto de fondo no debe estar vacío")
+    @Size(min = 7, message = "El color del texto de fondo debe tener al menos 7 caracteres")
     private String backgroundTextColor;
-    @Size(min = 7)
+
+    @NotBlank(message = "El color de fondo de la tarjeta no debe estar vacío")
+    @Size(min = 7, message = "El color de fondo de la tarjeta debe tener al menos 7 caracteres")
     private String cardBackground;
-    @Size(min = 7)
+
+    @NotBlank(message = "El color de texto de la tarjeta no debe estar vacío")
+    @Size(min = 7, message = "El color de texto de la tarjeta debe tener al menos 7 caracteres")
     private String cardText;
-    @Size(min = 7)
-    private String freeDeliveryText;
+
     private boolean isActive;
 }

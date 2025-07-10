@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 public class SizeUpdate {
     private int sizeId;
-
-    @NotNull(message = "size is mandatory")
+    @NotNull(message = "Talla esta vacía")
     private String size;
 }

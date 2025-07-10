@@ -12,8 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryUpdate {
-    @Min(1)
+    @Min(value = 1, message = "El 'categoryId' esta vacio")
     private int categoryId;
-    @NotBlank(message = "category name should not be empty")
+    @NotBlank(message = "El nombre de la categoria esta vacío")
     private String categoryName;
 }

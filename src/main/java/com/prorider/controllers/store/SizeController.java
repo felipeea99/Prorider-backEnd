@@ -4,6 +4,7 @@ import com.prorider.DTOs.request.store.SizeRequest;
 import com.prorider.DTOs.response.store.SizeResponse;
 import com.prorider.DTOs.update.store.SizeUpdate;
 import com.prorider.services.store.SizeService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +21,12 @@ public class SizeController {
     }
 
     @PostMapping("/")
-    public SizeResponse addSize(@RequestBody SizeRequest sizeRequest){
+    public SizeResponse addSize(@Valid  @RequestBody SizeRequest sizeRequest){
         return this.sizeService.addSize(sizeRequest);
     }
 
     @PutMapping("/")
-    public SizeResponse editSize(@RequestBody SizeUpdate sizeUpdate){
+    public SizeResponse editSize(@Valid @RequestBody SizeUpdate sizeUpdate){
         return this.sizeService.editSize(sizeUpdate);
     }
 

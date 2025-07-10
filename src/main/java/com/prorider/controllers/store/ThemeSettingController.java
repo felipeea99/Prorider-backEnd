@@ -2,6 +2,7 @@ package com.prorider.controllers.store;
 
 import com.prorider.entities.store.ThemeSetting;
 import com.prorider.services.store.ThemeSettingService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,12 +17,12 @@ public class ThemeSettingController {
     }
 
     @PostMapping("/")
-    public ThemeSetting addTheme(@RequestBody ThemeSetting themeSetting) {
+    public ThemeSetting addTheme(@Valid  @RequestBody ThemeSetting themeSetting) {
         return themeSettingService.addTheme(themeSetting);
     }
 
     @PutMapping("/")
-    public ThemeSetting editTheme(@RequestBody ThemeSetting themeSetting) {
+    public ThemeSetting editTheme(@Valid @RequestBody ThemeSetting themeSetting) {
         return themeSettingService.editTheme(themeSetting);
     }
 

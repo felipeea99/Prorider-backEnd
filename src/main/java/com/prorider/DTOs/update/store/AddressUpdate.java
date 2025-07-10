@@ -3,6 +3,7 @@ package com.prorider.DTOs.update.store;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,19 +17,19 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddressUpdate {
-    @Min(value = 1, message = "addressId must be greater than 0")
+    @NotNull(message = "El campo 'addressId' esta vacío ")
     private int addressId;
-    @NotBlank(message = "country is mandatory")
-    @Size(min = 4)
+    @NotBlank(message = "El campo 'País' es obligatorio")
+    @Size(min = 4, message = "El campo 'País' debe tener al menos 4 caracteres")
     private String country;
-    @NotBlank(message = "street is mandatory")
+    @NotBlank(message = "El campo 'Calle' es obligatorio")
     private String street;
-    @NotBlank(message = "number is mandatory")
+    @NotBlank(message = "El campo 'Número' es obligatorio")
     private String number;
-    @NotBlank(message = "colony is mandatory")
+    @NotBlank(message = "El campo 'Colonia' es obligatorio")
     private String colony;
-    @NotBlank(message = "town is mandatory")
+    @NotBlank(message = "El campo 'Ciudad' es obligatorio")
     private String town;
-    @NotBlank(message = "town is mandatory")
+    @NotBlank(message = "El campo 'userId' es obligatorio")
     private UUID userId;
 }

@@ -4,6 +4,7 @@ import com.prorider.DTOs.request.store.CartRequest;
 import com.prorider.DTOs.response.store.CartResponse;
 import com.prorider.DTOs.update.store.CartUpdate;
 import com.prorider.services.store.CartService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,13 +21,13 @@ public class CartController {
 
     /// This EndPoint adds a cartObject into the database
     @PostMapping("/")
-    public CartResponse addCart(@RequestBody CartRequest cartRequest){
+    public CartResponse addCart(@Valid  @RequestBody CartRequest cartRequest){
         return this.cartService.addCart(cartRequest);
     }
 
     /// This EndPoint edits a cartObject by using the cartId
     @PutMapping("/}")
-    public CartResponse editCart(@RequestBody CartUpdate cartUpdate){
+    public CartResponse editCart(@Valid @RequestBody CartUpdate cartUpdate){
         return this.cartService.editCart(cartUpdate);
     }
 
